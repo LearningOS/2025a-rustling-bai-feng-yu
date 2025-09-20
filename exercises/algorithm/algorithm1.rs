@@ -70,14 +70,40 @@ impl<T> LinkedList<T> {
         }
     }
 	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
-	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+	where
+    T: Ord + Clone,
+    {
+        let mut list_a = list_a;
+        let mut list_b = list_b;
+        let mut list_c = LinkedList::<T>::new();
+        let mut index_a = 0;
+        let mut index_b = 0;
+
+        while index_a<list_a.length && index_b<list_b.length{
+            let val_a = list_a.get(index_a as i32).unwrap();
+            let val_b = list_b.get(index_b as i32).unwrap();
+
+            if val_a<=val_b{
+                list_c.add((*val_a).to_owned());
+                index_a+=1;
+            }else{
+                list_c.add((*val_b).to_owned());
+                index_b+=1;
+            }
         }
-	}
+        while index_a<list_a.length{
+            let val_a = list_a.get(index_a as i32).unwrap();
+            list_c.add((*val_a).to_owned());
+            index_a+=1;
+            }
+
+        while index_b<list_b.length{
+            let b=list_b.get(index_b as i32).unwrap();
+            list_c.add((*b).to_owned());
+            index_b+=1;
+        }
+        list_c
+    }
 }
 
 impl<T> Display for LinkedList<T>
